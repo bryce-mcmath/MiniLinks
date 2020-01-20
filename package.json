@@ -1,0 +1,19 @@
+{
+  "name": "tinyapp",
+  "version": "1.0.0",
+  "description": "URL shortener application",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bryce-mcmath/tinyapp.git"
+  },
+  "author": "Bryce McMath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bryce-mcmath/tinyapp/issues"
+  },
+  "homepage": "https://github.com/bryce-mcmath/tinyapp#readme"
+}
