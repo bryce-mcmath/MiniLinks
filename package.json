@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/bryce-mcmath/tinyapp/issues"
   },
-  "homepage": "https://github.com/bryce-mcmath/tinyapp#readme"
+  "homepage": "https://github.com/bryce-mcmath/tinyapp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
