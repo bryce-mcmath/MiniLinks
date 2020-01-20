@@ -1,9 +1,33 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = 5050; // default port 8080
+const PORT = 5050;
 
 app.set('view engine', 'ejs');
+
+const generateRandomString = () => {
+  // assigns an array of random alphanumeric characters (lowercase)
+  let str = Math.random()
+    .toString(36)
+    .substring(2, 8)
+    .split('');
+
+  let alph = 'abcdefghijklmnopqrstuvwxyz';
+
+  for (let i = 0; i < str.length; i++) {
+    // If it's a alphabet char, randomly uppercase
+    if (alph.indexOf(str[i]) > -1 && Math.round(Math.random()) === 1) {
+      console.log(i, 'th time looping through if statement');
+      str[i] = str[i].toUpperCase();
+      console.log('Uppercased char', str[i]);
+    }
+  }
+
+  // returns joined string
+  return str.join('');
+};
+
+console.log('Random string: ', generateRandomString());
 
 const urlDatabase = {
   b2xVn2: 'http://www.lighthouselabs.ca',
