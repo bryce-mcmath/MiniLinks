@@ -5,6 +5,8 @@ const PORT = 5050;
 
 app.set('view engine', 'ejs');
 
+app.use(bodyParser.urlencoded({ extended: false }));
+
 const generateRandomString = () => {
   // assigns an array of random alphanumeric characters (lowercase)
   let str = Math.random()
@@ -17,17 +19,13 @@ const generateRandomString = () => {
   for (let i = 0; i < str.length; i++) {
     // If it's a alphabet char, randomly uppercase
     if (alph.indexOf(str[i]) > -1 && Math.round(Math.random()) === 1) {
-      console.log(i, 'th time looping through if statement');
       str[i] = str[i].toUpperCase();
-      console.log('Uppercased char', str[i]);
     }
   }
 
   // returns joined string
   return str.join('');
 };
-
-console.log('Random string: ', generateRandomString());
 
 const urlDatabase = {
   b2xVn2: 'http://www.lighthouselabs.ca',
@@ -61,7 +59,19 @@ app.get('/urls/:shortURL', (req, res) => {
 
 app.post('/urls', (req, res) => {
   console.log(req.body);
-  res.send('Ok');
+  let shortURL = generateRandomString();
+  while (Object.keys(urlDatabase).indexOf(shortURL) !== -1) {
+    shortURL = generateRandomString();
+  }
+  urlDatabase[shortURL] = req.body.longURL;
+  console.log(urlDatabase);
+  res.redirect(`/urls/${shortURL}`);
+});
+
+app.get('/u/:shortURL', (req, res) => {
+  const longURL = urlDatabase[req.params.shortURL];
+  res.redirect(longURL);
+  console.log('Redirected to ', longURL);
 });
 
 app.get('/hello', (req, res) => {
