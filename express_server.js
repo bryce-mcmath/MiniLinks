@@ -101,10 +101,6 @@ app.get('/u/:shortURL', (req, res) => {
   console.log('Redirected to ', longURL);
 });
 
-app.get('/hello', (req, res) => {
-  res.send('<html><body>Hello <b>World</b></body></html>\n');
-});
-
 // POST to /login in your Express server.
 app.post('/login', (req, res) => {
   console.log('Hit login route');
