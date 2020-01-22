@@ -5,15 +5,30 @@ const bcrypt = require('bcrypt');
 const app = express();
 const PORT = 5050;
 
+// Objects acting as stand-ins for a database
+const users = {};
+const urlDatabase = {};
+
+// Request handlers
+const {
+  registerGet,
+  registerPost,
+  loginGet,
+  loginPost,
+  logoutPost,
+  urlsGet,
+  urlsPost,
+  urlsNewGet,
+  urlGet,
+  urlPost,
+  urlDelete,
+  rootGet,
+  shortUrlGet,
+  catchGet
+} = require('./request_handlers/handlers');
+
 // To be used with bcrypt
 const saltRounds = 10;
-
-// Helper functions
-const {
-  getUserByEmail,
-  generateRandomString,
-  urlsForUser
-} = require('./helpers');
 
 app.set('view engine', 'ejs');
 
@@ -27,10 +42,6 @@ app.use(
   })
 );
 
-// Objects acting as stand-ins for a database
-const users = {};
-const urlDatabase = {};
-
 /*****************************************
  *********LOGIN/REGISTER ROUTES***********
  ****************************************/
@@ -38,111 +49,31 @@ const urlDatabase = {};
  * Renders register page
  * @method get
  */
-app.get('/register', (req, res) => {
-  if (req.session.user_id) {
-    res.redirect('/urls');
-  } else {
-    res.render('register', { user: undefined });
-  }
-});
+app.get('/register', registerGet);
 
 /**
  * Handles registration requests
  * @method post
  */
-app.post('/register', (req, res) => {
-  // Destructure info passed into post request
-  const { name, email, password, password2 } = req.body;
-
-  // Check passwords match and email hasn't been taken
-  if (
-    password &&
-    name &&
-    email &&
-    password === password2 &&
-    !getUserByEmail(email, users)
-  ) {
-    let id = generateRandomString();
-    while (Object.keys(users).indexOf(id) !== -1) {
-      id = generateRandomString();
-    }
-
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-      users[id] = {
-        name,
-        email: email.toLowerCase(),
-        id,
-        password: hash
-      };
-
-      req.session.user_id = id;
-      res.redirect('/urls');
-    });
-    // Add new user to users object
-  } else {
-    res.status(400);
-    res.redirect('back');
-  }
-});
+app.post('/register', registerPost);
 
 /**
  * Renders login page
  * @method get
  */
-app.get('/login', (req, res) => {
-  const id = req.session.user_id;
-  if (id) {
-    res.redirect('/urls');
-  } else {
-    res.render('login', { user: undefined });
-  }
-});
+app.get('/login', loginGet);
 
 /**
  * Handles login requests
  * @method post
  */
-app.post('/login', (req, res) => {
-  // Destructure info passed into post request
-  const { email, password } = req.body;
-  // Check if email is in the db, if it is return user id
-  const id = getUserByEmail(email, users);
-
-  // Confirm there is a pw, email, and id for this login attempt
-  if (password && email && id) {
-    // Get hashed pw from db
-    const hash = users[id].password;
-    // Verify correct pw
-    bcrypt.compare(password, hash, (err, result) => {
-      if (err) {
-        console.log('Error: ', err);
-        // 500: Internal server error
-        res.status(500);
-      } else {
-        if (result) {
-          req.session.user_id = id;
-          res.redirect('/urls');
-        } else {
-          console.log('Wrong password attempted');
-          // 403: Forbidden
-          res.status(403);
-          res.redirect('back');
-        }
-      }
-    });
-  }
-});
+app.post('/login', loginPost);
 
 /**
  * Handles logout requests
  * @method post
  */
-app.post('/logout', (req, res) => {
-  res.clearCookie('user_id');
-  res.clearCookie('session');
-  res.clearCookie('session.sig');
-  res.redirect('/register');
-});
+app.post('/logout', logoutPost);
 
 /*****************************************
  ***************URL ROUTES****************
@@ -151,91 +82,37 @@ app.post('/logout', (req, res) => {
  * Renders main page which lists urls
  * @method get
  */
-app.get('/urls', (req, res) => {
-  const urls = urlsForUser(req.session.user_id, urlDatabase);
-  const templateVars = {
-    user: users[req.session.user_id],
-    urls
-  };
-  res.render('urls_index', templateVars);
-});
+app.get('/urls', urlsGet);
 
 /**
  * Handles new short URL requests
  * @method post
  */
-app.post('/urls', (req, res) => {
-  let shortURL = generateRandomString();
-  while (Object.keys(urlDatabase).indexOf(shortURL) !== -1) {
-    shortURL = generateRandomString();
-  }
-  urlDatabase[shortURL] = {
-    longURL: req.body.longURL,
-    userID: req.session.user_id
-  };
-
-  res.redirect(`/urls/${shortURL}`);
-});
+app.post('/urls', urlsPost);
 
 /**
  * Renders page for creating new short URLS
  * @method get
  */
-app.get('/urls/new', (req, res) => {
-  if (req.session.user_id) {
-    const templateVars = {
-      user: users[req.session.user_id]
-    };
-    res.render('urls_new', templateVars);
-  } else {
-    res.redirect('/register');
-  }
-});
+app.get('/urls/new', urlsNewGet);
 
 /**
  * Renders specific page for a given short URL
  * @method get
  */
-app.get('/urls/:shortURL', (req, res) => {
-  const shortURL = req.params.shortURL;
-  const longURL = urlDatabase[shortURL].longURL;
-  const templateVars = {
-    user: users[req.session.user_id],
-    shortURL,
-    longURL
-  };
-
-  res.render('urls_show', templateVars);
-});
+app.get('/urls/:shortURL', urlGet);
 
 /**
  * Handles requests to update a short URL's corresponding long URL
  * @method post
  */
-app.post('/urls/:shortURL', (req, res) => {
-  const shortURL = req.params.shortURL;
-  const longURL = req.body.longURL;
-  if (req.session.user_id === urlDatabase[shortURL].userID) {
-    urlDatabase[shortURL].longURL = req.body.longURL;
-    res.redirect(`/urls/${shortURL}`);
-  } else {
-    res.status(403);
-  }
-});
+app.post('/urls/:shortURL', urlPost);
 
 /**
  * Handles requests to delete a short URL
  * @method post
  */
-app.post('/urls/:shortURL/delete', (req, res) => {
-  const shortURL = req.params.shortURL;
-  if (req.session.user_id === urlDatabase[shortURL].userID) {
-    delete urlDatabase[shortURL];
-    res.redirect('/urls');
-  } else {
-    res.status(403);
-  }
-});
+app.post('/urls/:shortURL/delete', urlDelete);
 
 /****************************************
  *************UTILITY ROUTES*************
@@ -245,34 +122,19 @@ app.post('/urls/:shortURL/delete', (req, res) => {
  * redirects to registration page
  * @method get
  */
-app.get('/', (req, res) => {
-  if (req.session.user_id) {
-    res.redirect('/urls');
-  } else {
-    res.redirect('/register');
-  }
-});
+app.get('/', rootGet);
 
 /**
  * Redirects from shortened URL to assigned long URL. Main functionality
  * @method get
  */
-app.get('/u/:shortURL', (req, res, app = app) => {
-  const shortURL = req.params.shortURL;
-  const longURL = urlDatabase[shortURL].longURL;
-  res.redirect(longURL);
-});
+app.get('/u/:shortURL', shortUrlGet);
 
 /**
- * Renders Not Found page
+ * Renders Not Found
  * @method get
  */
-app.get('*', (req, res) => {
-  const templateVars = {
-    user: users[req.session.user_id]
-  };
-  res.render('not_found', templateVars);
-});
+app.get('*', catchGet);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
