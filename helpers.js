@@ -18,17 +18,17 @@ const generateRandomString = () => {
   return str.join('');
 };
 
-// Returns true if email is taken, otherwise false
-const emailIsTaken = (email, usersObj) => {
+// Returns user id if email is taken, otherwise undefined
+const getUserByEmail = (email, usersObj) => {
   for (let usr in usersObj) {
     if (usersObj[usr].email === email.toLowerCase()) {
       return usr;
     }
   }
-  return false;
+  return undefined;
 };
 
-// Returns array of short URLs owned by a given user, using their ID
+// Returns object of URLs owned by a given user, using their ID
 const urlsForUser = (id, urlObj) => {
   const urls = {};
   for (const url in urlObj) {
@@ -40,7 +40,7 @@ const urlsForUser = (id, urlObj) => {
 };
 
 module.exports = {
-  emailIsTaken,
+  getUserByEmail,
   generateRandomString,
   urlsForUser
 };

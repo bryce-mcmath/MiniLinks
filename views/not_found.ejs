@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ("partials/_head") %>
+  <body>
+    <%- include ("partials/_header") %>
+
+    <div class="container my-2">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="error-template">
+            <h1>
+              Oops!
+            </h1>
+            <h2>
+              404 Not Found
+            </h2>
+            <div class="error-details">
+              Sorry, an error has occured, the page you were looking for does
+              not exist!
+            </div>
+            <div class="error-actions">
+              <a href="/urls" class="btn btn-success btn-lg mr-2"
+                ><i class="fas fa-home"></i> Take Me Home </a
+              ><a
+                href="https://github.com/bryce-mcmath/tinyapp/issues"
+                class="btn btn-dark btn-lg"
+                ><i class="fab fa-github-square"></i> Report Issue
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include ("partials/_vendor") %>
+  </body>
+</html>
