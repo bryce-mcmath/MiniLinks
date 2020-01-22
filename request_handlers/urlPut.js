@@ -1,17 +1,14 @@
 const fs = require('fs');
 
-const urlGet = (req, res) => {
+const urlPut = (req, res) => {
   try {
     const db = JSON.parse(fs.readFileSync('./db.json'));
     const shortURL = req.params.shortURL;
     if (req.session.user_id === db.urls[shortURL].userID) {
-      const longURL = db.urls[shortURL].longURL;
-      const templateVars = {
-        user: db.users[req.session.user_id],
-        shortURL,
-        longURL
-      };
-      res.render(`urls_show`, templateVars);
+      const longURL = req.body.longURL;
+      db.urls[shortURL].longURL = longURL;
+      fs.writeFileSync('./db.json', JSON.stringify(db));
+      res.redirect(`/urls/${shortURL}`);
     } else {
       res.status(403);
       res.redirect('/register');
@@ -23,4 +20,4 @@ const urlGet = (req, res) => {
   }
 };
 
-module.exports = urlGet;
+module.exports = urlPut;

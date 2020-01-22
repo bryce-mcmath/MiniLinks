@@ -1,13 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
+const methodOverride = require('method-override');
+
+// override with the X-HTTP-Method-Override header in the request
 const bcrypt = require('bcrypt');
 const app = express();
 const PORT = 5050;
-
-// Objects acting as stand-ins for a database
-const users = {};
-const urlDatabase = {};
 
 // Request handlers
 const {
@@ -20,7 +19,7 @@ const {
   urlsPost,
   urlsNewGet,
   urlGet,
-  urlPost,
+  urlPut,
   urlDelete,
   rootGet,
   shortUrlGet,
@@ -34,6 +33,7 @@ app.set('view engine', 'ejs');
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
 app.use(
   cookieSession({
     name: 'session',
@@ -104,15 +104,15 @@ app.get('/urls/:shortURL', urlGet);
 
 /**
  * Handles requests to update a short URL's corresponding long URL
- * @method post
+ * @method put
  */
-app.post('/urls/:shortURL', urlPost);
+app.put('/urls/:shortURL', urlPut);
 
 /**
  * Handles requests to delete a short URL
- * @method post
+ * @method delete
  */
-app.post('/urls/:shortURL/delete', urlDelete);
+app.delete('/urls/:shortURL', urlDelete);
 
 /****************************************
  *************UTILITY ROUTES*************
@@ -134,7 +134,7 @@ app.get('/u/:shortURL', shortUrlGet);
  * Renders Not Found
  * @method get
  */
-app.get('*', catchGet);
+app.get('/*', catchGet);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

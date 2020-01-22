@@ -7,7 +7,7 @@ const urlsGet = require('./urlsGet');
 const urlsPost = require('./urlsPost');
 const urlsNewGet = require('./urlsNewGet');
 const urlGet = require('./urlGet');
-const urlPost = require('./urlPost');
+const urlPut = require('./urlPut');
 const urlDelete = require('./urlDelete');
 const rootGet = require('./rootGet');
 const shortUrlGet = require('./shortUrlGet');
@@ -23,7 +23,7 @@ module.exports = {
   urlsPost,
   urlsNewGet,
   urlGet,
-  urlPost,
+  urlPut,
   urlDelete,
   rootGet,
   shortUrlGet,

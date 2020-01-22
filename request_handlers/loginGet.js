@@ -1,5 +1,3 @@
-const cookieSession = require('cookie-session');
-
 const loginGet = (req, res) => {
   const id = req.session.user_id;
   if (id) {
