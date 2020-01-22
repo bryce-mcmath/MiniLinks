@@ -22,24 +22,10 @@ const generateRandomString = () => {
 const emailIsTaken = (email, usersObj) => {
   for (let usr in usersObj) {
     if (usersObj[usr].email === email.toLowerCase()) {
-      return true;
-    }
-  }
-  return false;
-};
-
-// Returns id for valid email & password, otherwise returns false
-const passwordIsValid = (email, usersObj, pw) => {
-  for (let usr in usersObj) {
-    if (
-      usersObj[usr].email === email.toLowerCase() &&
-      usersObj[usr].password === pw
-    ) {
-      console.log('Password is valid, usr is: ', usr);
       return usr;
     }
   }
-  return undefined;
+  return false;
 };
 
 // Returns array of short URLs owned by a given user, using their ID
@@ -54,7 +40,6 @@ const urlsForUser = (id, urlObj) => {
 };
 
 module.exports = {
-  passwordIsValid,
   emailIsTaken,
   generateRandomString,
   urlsForUser

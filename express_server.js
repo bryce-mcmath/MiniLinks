@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 const app = express();
 const PORT = 5050;
 
+// To be used with bcrypt
+const saltRounds = 10;
+
 // Helper functions
 const {
-  passwordIsValid,
   emailIsTaken,
   generateRandomString,
   urlsForUser
@@ -19,29 +22,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Objects acting as stand-ins for a database
+const users = {};
 const urlDatabase = {
   b2xVn2: { longURL: 'http://www.lighthouselabs.ca', userID: 'A7ei0p' },
   '9sm5xK': { longURL: 'http://www.google.com', userID: 'e7I9U0' }
-};
-const users = {
-  A7ei0p: {
-    name: 'Andy',
-    id: 'A7ei0p',
-    email: 'andy@gmail.com',
-    password: 'purple-monkey-dinosaur'
-  },
-  lL32o0: {
-    name: 'Mark',
-    id: 'lL32o0',
-    email: 'mark@gmail.com',
-    password: 'dishwasher-funk'
-  },
-  e7I9U0: {
-    name: 'Bryce McMath',
-    id: 'e7I9U0',
-    email: 'bryce.j.mcmath@gmail.com',
-    password: '123456'
-  }
 };
 
 /****************************************
@@ -53,7 +37,6 @@ const users = {
  * @method get
  */
 app.get('/', (req, res) => {
-  console.log('HIT /');
   if (req.cookies['user_id']) {
     res.redirect('/urls');
   } else {
@@ -66,7 +49,6 @@ app.get('/', (req, res) => {
  * @method get
  */
 app.get('/u/:shortURL', (req, res) => {
-  console.log('HIT /u/:shortURL');
   const shortURL = req.params.shortURL;
   const longURL = urlDatabase[shortURL].longURL;
   res.redirect(longURL);
@@ -80,7 +62,6 @@ app.get('/u/:shortURL', (req, res) => {
  * @method get
  */
 app.get('/register', (req, res) => {
-  console.log('HIT /register');
   if (req.cookies['user_id']) {
     res.redirect('/urls');
   } else {
@@ -109,16 +90,18 @@ app.post('/register', (req, res) => {
       id = generateRandomString();
     }
 
-    // Add new user to users object
-    users[id] = {
-      name,
-      email: email.toLowerCase(),
-      id,
-      password
-    };
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      users[id] = {
+        name,
+        email: email.toLowerCase(),
+        id,
+        password: hash
+      };
 
-    res.cookie('user_id', id);
-    res.redirect('/urls');
+      res.cookie('user_id', id);
+      res.redirect('/urls');
+    });
+    // Add new user to users object
   } else {
     res.status(400);
     res.redirect('back');
@@ -130,7 +113,6 @@ app.post('/register', (req, res) => {
  * @method get
  */
 app.get('/login', (req, res) => {
-  console.log('HIT /login');
   const id = req.cookies['user_id'];
   if (id) {
     res.redirect('/urls');
@@ -146,15 +128,31 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   // Destructure info passed into post request
   const { email, password } = req.body;
+  // Check if email is in the db, if it is return user id
+  const id = emailIsTaken(email, users);
 
-  // Check the passwords match (should also check on front end)
-  if (password && email && passwordIsValid(email, users, password)) {
-    const id = passwordIsValid(email, users, password);
-    res.cookie('user_id', id);
-    res.redirect('/urls');
-  } else {
-    res.status(403);
-    res.redirect('back');
+  // Confirm there is a pw, email, and id for this login attempt
+  if (password && email && id) {
+    // Get hashed pw from db
+    const hash = users[id].password;
+    // Verify correct pw
+    bcrypt.compare(password, hash, (err, result) => {
+      if (err) {
+        console.log('Error: ', err);
+        // 500: Internal server error
+        res.status(500);
+      } else {
+        if (result) {
+          res.cookie('user_id', id);
+          res.redirect('/urls');
+        } else {
+          console.log('Wrong password attempted');
+          // 403: Forbidden
+          res.status(403);
+          res.redirect('back');
+        }
+      }
+    });
   }
 });
 
@@ -175,7 +173,6 @@ app.post('/logout', (req, res) => {
  * @method get
  */
 app.get('/urls', (req, res) => {
-  console.log('HIT /urls');
   const urls = urlsForUser(req.cookies['user_id'], urlDatabase);
   const templateVars = {
     user: users[req.cookies['user_id']],
@@ -206,7 +203,6 @@ app.post('/urls', (req, res) => {
  * @method get
  */
 app.get('/urls/new', (req, res) => {
-  console.log('HIT /urls/new');
   if (req.cookies['user_id']) {
     const templateVars = {
       user: users[req.cookies['user_id']]
@@ -222,7 +218,6 @@ app.get('/urls/new', (req, res) => {
  * @method get
  */
 app.get('/urls/:shortURL', (req, res) => {
-  console.log('HIT /urls/:shortURL');
   const shortURL = req.params.shortURL;
   const longURL = urlDatabase[shortURL].longURL;
   const templateVars = {
