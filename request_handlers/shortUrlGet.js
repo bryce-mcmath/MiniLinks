@@ -1,4 +1,4 @@
-const { generateId, getVisitorIndex } = require('../helpers');
+const { generateId, getVisitorIndex } = require('../helpers/helpers');
 
 const fs = require('fs');
 

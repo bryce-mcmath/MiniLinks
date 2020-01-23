@@ -5,7 +5,7 @@ const fs = require('fs');
 let saltRounds = 10;
 
 // Helper functions
-const { getUserByEmail, generateId } = require('../helpers');
+const { getUserByEmail, generateId } = require('../helpers/helpers');
 
 const registerPost = (req, res) => {
   try {

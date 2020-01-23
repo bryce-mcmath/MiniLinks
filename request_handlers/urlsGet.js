@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // Helper functions
-const { urlsForUser } = require('../helpers');
+const { urlsForUser } = require('../helpers/helpers');
 
 const urlsGet = (req, res) => {
   try {

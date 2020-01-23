@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // Helper functions
-const { generateId } = require('../helpers');
+const { generateId } = require('../helpers/helpers');
 
 const urlsPost = (req, res) => {
   try {

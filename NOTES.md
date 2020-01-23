@@ -1,0 +1,18 @@
+- Add alert state and functionality
+  - Taken email
+  - incorrect email/password
+  - passwords don't match
+- Refactor helpers into folder and seperate files
+- Add helper functions
+  - userIsLoggedIn
+  - genUniqVisitorId
+  - genUniqUserId
+  - genUniqUrlId
+  -
+- Refactor to express router
+- README
+- Laptop/mobile usage pics
+- Gif of usage
+- Host
+- Emoji
+- JSDoc

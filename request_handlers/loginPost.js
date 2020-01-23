@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 
 // Helper functions
-const { getUserByEmail } = require('../helpers');
+const { getUserByEmail } = require('../helpers/helpers');
 
 const loginPost = (req, res) => {
   try {
@@ -18,6 +18,7 @@ const loginPost = (req, res) => {
     if (password && email && id) {
       // Get hashed pw from db
       const hash = db.users[id].password;
+
       // Verify correct pw
       bcrypt.compare(password, hash, (err, result) => {
         if (err) {

@@ -1,3 +1,5 @@
+const initDatabase = require('./initDatabase');
+
 // Returns random six character alphanumeric string with varied case
 const generateId = () => {
   // assigns an array of random alphanumeric characters (lowercase)
@@ -53,6 +55,7 @@ const urlsForUser = (id, urlObj) => {
 };
 
 module.exports = {
+  initDatabase,
   getUserByEmail,
   generateId,
   urlsForUser,
