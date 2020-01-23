@@ -4,12 +4,12 @@ const urlGet = (req, res) => {
   try {
     const db = JSON.parse(fs.readFileSync('./db.json'));
     const shortURL = req.params.shortURL;
-    if (req.session.user_id === db.urls[shortURL].userID) {
-      const longURL = db.urls[shortURL].longURL;
+    const url = db.urls[shortURL];
+    if (url && req.session.user_id === url.userID) {
       const templateVars = {
         user: db.users[req.session.user_id],
-        shortURL,
-        longURL
+        url,
+        shortURL
       };
       res.render(`urls_show`, templateVars);
     } else {

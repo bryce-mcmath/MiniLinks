@@ -1,0 +1,68 @@
+.nav-item {
+  color: #fff;
+}
+
+.nav-bg,
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #301934 !important;
+  border-color: #140118 !important;
+}
+
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:active {
+  box-shadow: 0 0 0 0.1rem #140118 !important;
+}
+
+i {
+  position: relative;
+}
+
+.arrow {
+  animation: slide1 1s ease-in-out infinite;
+}
+
+.bouncer {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.container {
+  min-height: 20rem;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  height: 5rem;
+}
+
+.footer nav {
+  height: 100%;
+}
+
+@keyframes slide1 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(10px, 0);
+  }
+}
+
+@media screen and (min-width: 442px) {
+  .hide-tablet {
+    display: none;
+  }
+}

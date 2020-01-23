@@ -1,6 +1,8 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-success">
-    <a class="navbar-brand" href="/urls"><i class="fas fa-link"></i> TinyApp</a>
+  <nav class="navbar navbar-expand-md navbar-dark nav-bg">
+    <a class="navbar-brand" href="/urls"
+      ><i class="fas fa-link"></i> MiniLink</a
+    >
     <button
       class="navbar-toggler"
       type="button"
@@ -17,12 +19,12 @@
       <% if (!user) { %>
       <div class="navbar-nav ml-auto">
         <a class="nav-item nav-link" href="/register">
-          <button class="btn btn-outline-dark " type="button">
+          <button class="btn btn-outline-light float-right" type="button">
             Register
           </button>
         </a>
         <a class="nav-item nav-link" href="/login">
-          <button class="btn btn-outline-dark " type="button">
+          <button class="btn btn-outline-light float-right" type="button">
             Login
           </button>
         </a>
@@ -30,10 +32,12 @@
 
       <% } else { %>
       <div class="navbar-nav mr-auto">
-        <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+        <a class="nav-item float-right nav-link" href="/urls">My URLs</a>
+        <a class="nav-item float-right nav-link" href="/urls/new"
+          >Create New URL</a
+        >
       </div>
-      <div class="nav-item mr-2" style="color: white;">
+      <div class="nav-item mr-2 my-2">
         Welcome, <%= user.name %>
       </div>
       <form class="form-inline" action="/logout" method="POST">

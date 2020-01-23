@@ -2,8 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const methodOverride = require('method-override');
-
-// override with the X-HTTP-Method-Override header in the request
 const bcrypt = require('bcrypt');
 const app = express();
 const PORT = 5050;
@@ -32,6 +30,7 @@ const saltRounds = 10;
 app.set('view engine', 'ejs');
 
 // Middleware
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(

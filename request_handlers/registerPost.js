@@ -5,7 +5,7 @@ const fs = require('fs');
 let saltRounds = 10;
 
 // Helper functions
-const { getUserByEmail, generateRandomString } = require('../helpers');
+const { getUserByEmail, generateId } = require('../helpers');
 
 const registerPost = (req, res) => {
   try {
@@ -20,9 +20,9 @@ const registerPost = (req, res) => {
       password === password2 &&
       !getUserByEmail(email, db.users)
     ) {
-      let id = generateRandomString();
+      let id = generateId();
       while (Object.keys(db.users).indexOf(id) !== -1) {
-        id = generateRandomString();
+        id = generateId();
       }
       bcrypt.hash(password, saltRounds, (err, hash) => {
         if (err) {
@@ -34,7 +34,7 @@ const registerPost = (req, res) => {
             id,
             password: hash
           };
-          fs.writeFileSync('./db.json', JSON.stringify(db));
+          fs.writeFileSync('./db.json', JSON.stringify(db, null, 2));
           req.session.user_id = id;
           res.redirect('/urls');
         }

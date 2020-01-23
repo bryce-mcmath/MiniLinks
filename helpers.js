@@ -1,5 +1,5 @@
 // Returns random six character alphanumeric string with varied case
-const generateRandomString = () => {
+const generateId = () => {
   // assigns an array of random alphanumeric characters (lowercase)
   let str = Math.random()
     .toString(36)
@@ -28,6 +28,19 @@ const getUserByEmail = (email, usersObj) => {
   return undefined;
 };
 
+// Returns user id if email is taken, otherwise undefined
+const getVisitorIndex = (id, urlsObj) => {
+  for (let url in urlsObj) {
+    let visitors = urlsObj[url].visitors;
+    for (let i = 0; i < visitors.length; i++) {
+      if (visitors[i].id === id) {
+        return i;
+      }
+    }
+  }
+  return undefined;
+};
+
 // Returns object of URLs owned by a given user, using their ID
 const urlsForUser = (id, urlObj) => {
   const urls = {};
@@ -41,6 +54,7 @@ const urlsForUser = (id, urlObj) => {
 
 module.exports = {
   getUserByEmail,
-  generateRandomString,
-  urlsForUser
+  generateId,
+  urlsForUser,
+  getVisitorIndex
 };

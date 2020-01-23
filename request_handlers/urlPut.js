@@ -7,7 +7,8 @@ const urlPut = (req, res) => {
     if (req.session.user_id === db.urls[shortURL].userID) {
       const longURL = req.body.longURL;
       db.urls[shortURL].longURL = longURL;
-      fs.writeFileSync('./db.json', JSON.stringify(db));
+      db.urls[shortURL].visitors = [];
+      fs.writeFileSync('./db.json', JSON.stringify(db, null, 2));
       res.redirect(`/urls/${shortURL}`);
     } else {
       res.status(403);

@@ -6,7 +6,7 @@ const urlDelete = (req, res) => {
     const shortURL = req.params.shortURL;
     if (req.session.user_id === db.urls[shortURL].userID) {
       delete db.urls[shortURL];
-      fs.writeFileSync('./db.json', JSON.stringify(db));
+      fs.writeFileSync('./db.json', JSON.stringify(db, null, 2));
       res.redirect('/urls');
     } else {
       res.status(403);
