@@ -9,7 +9,7 @@ const getVisits = (url, visitorsArr) => {
           if (id === url) {
             const visitedUrls = visitor.visited_urls;
             for (let i = 0; i < visitedUrls[id].length; i++) {
-              visits.push({ id, timestamp: visitedUrls[id][i] });
+              visits.push({ id: visitor.id, timestamp: visitedUrls[id][i] });
             }
           }
         }

@@ -1,12 +1,12 @@
 # MiniLinks
 
-> A URL shortener, à la Bitly, TinyURL, and Rebrandly.
+> A URL shortener, à la Bitly, TinyURL, or Rebrandly.
 
 MiniLinks is a very cruddy app. Users can register, login, logout, create shortened URLs, edit them, delete them, view how many times they've been visited (both uniquely and overall) and the timestamps of when they were visited as well as the date they were created.
 
 This app was made in three days on top of other coursework, and the UI reflects that.
 
-![MiniLinks]([screenshot1])
+![MiniLinks]([demo])
 
 ## Table of contents
 
@@ -23,6 +23,8 @@ This app was made in three days on top of other coursework, and the UI reflects 
 ## Usage
 
 ![MiniLinks](https://upload.wikimedia.org/wikipedia/commons/5/57/Bootstrap-3.1.1-screenshot-jumbotron-example.png)
+
+The above gif demonstrates basic usage
 
 ## Getting started
 
@@ -105,4 +107,4 @@ Email: [bryce.j.mcmath@gmail.com](mailto:bryce.j.mcmath@gmail.com)
 
 <!-- Markdown link & img definitions -->
 
-[screenshot1]: ./screenshots/screenshot1.png
+[demo]: ./screenshots/demo.gif
