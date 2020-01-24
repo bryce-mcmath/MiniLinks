@@ -25,10 +25,11 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
+const { secret } = require('./config');
 app.use(
   cookieSession({
     name: 'session',
-    secret: 'ckent',
+    secret,
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   })
 );
