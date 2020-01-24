@@ -18,10 +18,10 @@ const urlsGet = (req, res) => {
       // Fetch urls
       const urls = urlsForUser(req.session.user_id, db.urls);
       // Fetch alerts
-      const visitorIndex = getVisitorIndex(req.session.visitor_id, db.visitors);
+      const index = getVisitorIndex(req.session.visitor_id, db.visitors);
       let alerts = [];
-      if (db.visitors[visitorIndex]) {
-        alerts = getAlerts(visitorIndex, db.visitors);
+      if (index !== -1) {
+        alerts = getAlerts(index, db.visitors);
       }
       console.log('Alerts in GET/urls before templateVars sent: ', alerts);
       const templateVars = {
@@ -33,12 +33,15 @@ const urlsGet = (req, res) => {
       res.render('urls_index', templateVars);
       if (alerts.length >= 1) {
         // Reset alerts after render
-        db.visitors[visitorIndex].alerts = [];
+        db.visitors[index].alerts = [];
 
         // Update db
         updateDatabase(db);
       }
-      console.log('Alerts in GET/urls after templateVars sent: ', alerts);
+      console.log(
+        'Alerts in GET/urls after templateVars sent: ',
+        db.visitors[index].alerts
+      );
     } else {
       res.status(403);
       res.redirect('/login');

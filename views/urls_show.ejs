@@ -4,7 +4,25 @@
 
   <body>
     <%- include ("partials/_header") %>
-    <div class="container my-3">
+    <div class="main container">
+      <% if (alerts.length > 0) { %> <% for (let i = 0; i < alerts.length; i++)
+      { %>
+      <div
+        id="<%= i.toString() %>"
+        class="alert alert-dismissible fade show alert-<%= alerts[i].type%>"
+        role="alert"
+      >
+        <%= alerts[i].msg %>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <% } %> <% } %>
       <div class="card text-center">
         <div class="card-header"></div>
         <div class="card-body">

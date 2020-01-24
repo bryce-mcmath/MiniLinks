@@ -6,7 +6,8 @@ const {
   getDatabase,
   updateDatabase,
   getUserByEmail,
-  genUserId
+  genUserId,
+  genVisitorId
 } = require('../helpers/helpers');
 
 // ALERTS NEEDED IN HERE
@@ -50,6 +51,33 @@ const registerPost = (req, res) => {
         }
       });
     } else {
+      const id = genVisitorId();
+
+      if (getUserByEmail(email, db.users)) {
+        db.visitors.push({
+          id,
+          visited_urls: {},
+          alerts: [{ type: 'warning', msg: 'That email is already taken' }]
+        });
+      } else if (password !== password2) {
+        db.visitors.push({
+          id,
+          visited_urls: {},
+          alerts: [
+            { type: 'warning', msg: 'Please ensure your passwords match' }
+          ]
+        });
+      } else {
+        db.visitors.push({
+          id,
+          visited_urls: {},
+          alerts: [
+            { type: 'warning', msg: 'There was a problem, please try again' }
+          ]
+        });
+      }
+      updateDatabase(db);
+      req.session.visitor_id = id;
       // 400: Bad Request
       res.status(400);
       res.redirect('back');

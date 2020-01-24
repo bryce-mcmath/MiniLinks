@@ -24,29 +24,56 @@ const urlsPost = (req, res) => {
       db.urls[shortURL] = {
         longURL: req.body.longURL,
         userID: req.session.user_id,
-        created,
-        visitors: []
+        created
       };
 
-      // Write to database
-      updateDatabase(db);
-      res.redirect(`/urls/${shortURL}`);
-    } else {
-      // If not logged in and attempting to post
       // Check if they have visitor cookie
-      const visitorIndex = getVisitorIndex(req.session.visitor_id, db.visitors);
+      const index = getVisitorIndex(req.session.visitor_id, db.visitors);
       // If they have a current visitor session already
-      if (visitorIndex !== -1) {
+      if (index !== -1) {
         // Add alert to db
-        db.visitors[visitorIndex].alerts.push({
-          type: 'danger',
-          msg: 'You cannot create MiniLinks without logging in'
+        db.visitors[index].alerts.push({
+          type: 'success',
+          msg: 'New MiniLink created!'
         });
       } else {
         // Create a visitor id, object in db, and session
-        const visitorId = genVisitorId(db.visitors);
+        const id = genVisitorId(db.visitors);
         db.visitors.push({
-          visitorId,
+          id,
+          visited_urls: {},
+          alerts: [
+            {
+              type: 'success',
+              msg: 'New MiniLink created!'
+            }
+          ]
+        });
+
+        // Have a cookie!
+        res.session.visitor_id = id;
+      }
+
+      // Write to database
+      updateDatabase(db);
+      res.redirect('/urls');
+    } else {
+      // If not logged in and attempting to post
+      // Check if they have visitor cookie
+      const index = getVisitorIndex(req.session.visitor_id, db.visitors);
+      // If they have a current visitor session already
+      if (index !== -1) {
+        // Add alert to db
+        db.visitors[index].alerts.push({
+          type: 'danger',
+          msg: 'You cannot create MiniLinks without logging in'
+        });
+        updateDatabase(db);
+      } else {
+        // Create a visitor id, object in db, and session
+        const id = genVisitorId(db.visitors);
+        db.visitors.push({
+          id,
           visited_urls: {},
           alerts: [
             {
@@ -56,9 +83,9 @@ const urlsPost = (req, res) => {
           ]
         });
         // Have a cookie!
-        res.session.visitor_id = visitorId;
+        res.session.visitor_id = id;
+        updateDatabase(db);
       }
-      updateDatabase(db);
       // 403: Forbidden
       res.status(403);
       // Send them to login where the alert will display
