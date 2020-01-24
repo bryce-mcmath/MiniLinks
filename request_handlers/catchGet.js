@@ -1,10 +1,12 @@
-const fs = require('fs');
+// Helper functions
+const { getDatabase } = require('../helpers/helpers');
 
 const catchGet = (req, res) => {
   try {
-    const db = JSON.parse(fs.readFileSync('./db.json'));
+    const db = getDatabase();
+    const user = db.users[req.session.user_id];
     const templateVars = {
-      user: db.users[req.session.user_id]
+      user
     };
     res.render('not_found', templateVars);
   } catch (error) {

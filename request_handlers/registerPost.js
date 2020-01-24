@@ -1,17 +1,22 @@
 const bcrypt = require('bcrypt');
-const fs = require('fs');
-
-// To be used with bcrypt
-let saltRounds = 10;
+const { saltRounds } = require('./config');
 
 // Helper functions
-const { getUserByEmail, generateId } = require('../helpers/helpers');
+const {
+  getDatabase,
+  updateDatabase,
+  getUserByEmail,
+  generateId
+} = require('../helpers/helpers');
 
+// ALERTS NEEDED IN HERE
 const registerPost = (req, res) => {
   try {
-    const db = JSON.parse(fs.readFileSync('./db.json'));
+    const db = getDatabase();
+
     // Destructure info passed into post request
     const { name, email, password, password2 } = req.body;
+
     // Check passwords match and email hasn't been taken
     if (
       password &&
@@ -20,10 +25,7 @@ const registerPost = (req, res) => {
       password === password2 &&
       !getUserByEmail(email, db.users)
     ) {
-      let id = generateId();
-      while (Object.keys(db.users).indexOf(id) !== -1) {
-        id = generateId();
-      }
+      // PUT HELPER HERE
       bcrypt.hash(password, saltRounds, (err, hash) => {
         if (err) {
           console.log('Error creating hash: ', err);
@@ -34,7 +36,7 @@ const registerPost = (req, res) => {
             id,
             password: hash
           };
-          fs.writeFileSync('./db.json', JSON.stringify(db, null, 2));
+          updateDatabase(db);
           req.session.user_id = id;
           res.redirect('/urls');
         }

@@ -1,12 +1,16 @@
 const bcrypt = require('bcrypt');
-const fs = require('fs');
 
 // Helper functions
-const { getUserByEmail } = require('../helpers/helpers');
+const {
+  getDatabase,
+  updateDatabase,
+  getUserByEmail
+} = require('../helpers/helpers');
 
+// ALERT NEEDED IN HERE
 const loginPost = (req, res) => {
   try {
-    const db = JSON.parse(fs.readFileSync('./db.json'));
+    const db = getDatabase();
 
     // Destructure info passed into post request
     const { email, password } = req.body;

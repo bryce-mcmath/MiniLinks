@@ -11,14 +11,16 @@ const db = {
     shortURL: {
       longURL: '',
       user_id: '',
-      visitors: [
-        {
-          id: 'sh34I9',
-          visits: [Date.now(), Date.now()]
-        }
-      ]
+      created: Date.now()
     }
-  }
+  },
+  visitors: [
+    {
+      id: 'dsadsa',
+      visited_urls: { sadsad: [Date.now()] },
+      alerts: [{ type: 'danger', msg: 'u messed up' }]
+    }
+  ]
 };
 
 console.log(db);

@@ -7,7 +7,10 @@ const initDatabase = () => {
     return;
   } else {
     // Create a new json db
-    fs.writeFileSync('./db.json', JSON.stringify({ users: {}, urls: {} }));
+    fs.writeFileSync(
+      './db.json',
+      JSON.stringify({ users: {}, urls: {}, visitors: [] })
+    );
   }
 };
 

@@ -9,7 +9,6 @@
   - genUniqUserId
   - genUniqUrlId
   -
-- Refactor to express router
 - README
 - Laptop/mobile usage pics
 - Gif of usage

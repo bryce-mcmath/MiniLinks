@@ -1,8 +1,12 @@
+const { getDatabase, userIsLoggedIn } = require('../helpers/helpers');
+
 const rootGet = (req, res) => {
-  if (req.session.user_id) {
+  const db = getDatabase();
+
+  if (userIsLoggedIn(req.session.user_id, db.users)) {
     res.redirect('/urls');
   } else {
-    res.redirect('/register');
+    res.redirect('/login');
   }
 };
 

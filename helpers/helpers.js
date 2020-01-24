@@ -1,63 +1,43 @@
+// Working
 const initDatabase = require('./initDatabase');
-
-// Returns random six character alphanumeric string with varied case
-const generateId = () => {
-  // assigns an array of random alphanumeric characters (lowercase)
-  let str = Math.random()
-    .toString(36)
-    .substring(2, 8)
-    .split('');
-
-  let alph = 'abcdefghijklmnopqrstuvwxyz';
-
-  for (let i = 0; i < str.length; i++) {
-    // If it's a alphabet char, randomly uppercase
-    if (alph.indexOf(str[i]) > -1 && Math.round(Math.random()) === 1) {
-      str[i] = str[i].toUpperCase();
-    }
-  }
-
-  return str.join('');
-};
-
-// Returns user id if email is taken, otherwise undefined
-const getUserByEmail = (email, usersObj) => {
-  for (let usr in usersObj) {
-    if (usersObj[usr].email === email.toLowerCase()) {
-      return usr;
-    }
-  }
-  return undefined;
-};
-
-// Returns user id if email is taken, otherwise undefined
-const getVisitorIndex = (id, urlsObj) => {
-  for (let url in urlsObj) {
-    let visitors = urlsObj[url].visitors;
-    for (let i = 0; i < visitors.length; i++) {
-      if (visitors[i].id === id) {
-        return i;
-      }
-    }
-  }
-  return undefined;
-};
-
-// Returns object of URLs owned by a given user, using their ID
-const urlsForUser = (id, urlObj) => {
-  const urls = {};
-  for (const url in urlObj) {
-    if (urlObj[url].userID === id) {
-      urls[url] = urlObj[url].longURL;
-    }
-  }
-  return urls;
-};
+// Working
+const updateDatabase = require('./updateDatabase');
+// Working
+const getDatabase = require('./getDatabase');
+// Working
+const getVisits = require('./getVisits');
+// Working
+const getUserByEmail = require('./getUserByEmail');
+// Working
+const getVisitorIndex = require('./getVisitorIndex');
+// Working
+const urlsForUser = require('./urlsForUser');
+// Working
+const genShortUrl = require('./genShortUrl');
+// Working
+const genUserId = require('./genUserId');
+// Working
+const genVisitorId = require('./genVisitorId');
+// Working
+const getUniqVisits = require('./getUniqVisits');
+// Working
+const userIsLoggedIn = require('./userIsLoggedIn');
+// Working
+const getAlerts = require('./getAlerts');
 
 module.exports = {
   initDatabase,
+  updateDatabase,
+  getDatabase,
   getUserByEmail,
   generateId,
   urlsForUser,
-  getVisitorIndex
+  getVisits,
+  getVisitorIndex,
+  genShortUrl,
+  genUserId,
+  genVisitorId,
+  getUniqVisits,
+  userIsLoggedIn,
+  getAlerts
 };

@@ -1,9 +1,12 @@
+// Helper functions
+const { getDatabase, userIsLoggedIn } = require('../helpers/helpers');
+
 const loginGet = (req, res) => {
-  const id = req.session.user_id;
-  if (id) {
+  const db = getDatabase();
+  if (userIsLoggedIn(req.session.user_id, db.users)) {
     res.redirect('/urls');
   } else {
-    res.render('login', { user: undefined });
+    res.render('login', { user: undefined, alerts: [] });
   }
 };
 
