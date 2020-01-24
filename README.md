@@ -6,11 +6,14 @@ MiniLinks is a very cruddy app. Users can register, login, logout, create shorte
 
 This app was made in three days on top of other coursework, and the UI reflects that.
 
-![MiniLinks]([demo])
+## Usage
+
+![MiniLinks](https://raw.githubusercontent.com/bryce-mcmath/tinyapp/master/screenshots/demo.gif)
+
+The above gif demonstrates basic usage
 
 ## Table of contents
 
-- [Usage](#usage)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installing and running](#installing-and-running)
@@ -19,12 +22,6 @@ This app was made in three days on top of other coursework, and the UI reflects 
 - [Dev Dependencies](#dev-dependencies)
 - [Known issues / bugs](#known-issues-/-bugs)
 - [Feature roadmap](#feature-roadmap)
-
-## Usage
-
-![MiniLinks](https://upload.wikimedia.org/wikipedia/commons/5/57/Bootstrap-3.1.1-screenshot-jumbotron-example.png)
-
-The above gif demonstrates basic usage
 
 ## Getting started
 
@@ -107,4 +104,4 @@ Email: [bryce.j.mcmath@gmail.com](mailto:bryce.j.mcmath@gmail.com)
 
 <!-- Markdown link & img definitions -->
 
-[demo]: ./screenshots/demo.gif
+[demo]: https://raw.githubusercontent.com/bryce-mcmath/tinyapp/master/screenshots/demo.gif
