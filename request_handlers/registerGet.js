@@ -22,10 +22,6 @@ const registerGet = (req, res) => {
     if (visitorIndex !== -1) {
       db.visitors[visitorIndex].alerts = [];
       updateDatabase(db);
-      console.log(
-        'alerts after rendering register: ',
-        db.visitors[visitorIndex].alerts
-      );
     }
   }
 };

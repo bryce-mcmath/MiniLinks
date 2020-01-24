@@ -34,7 +34,7 @@ const urlsPost = (req, res) => {
         // Add alert to db
         db.visitors[index].alerts.push({
           type: 'success',
-          msg: 'New MiniLink created!'
+          msg: `New MiniLink '${shortURL}' created!`
         });
       } else {
         // Create a visitor id, object in db, and session
@@ -45,7 +45,7 @@ const urlsPost = (req, res) => {
           alerts: [
             {
               type: 'success',
-              msg: 'New MiniLink created!'
+              msg: `New MiniLink '${shortURL}' created!`
             }
           ]
         });

@@ -34,8 +34,10 @@ const loginPost = (req, res) => {
         } else {
           // if password correct
           if (result) {
+            // Have a cookie!
             req.session.user_id = id;
-            const index = getVisitorIndex(req.session.visitor_id, db.visitors);
+            let index = getVisitorIndex(req.session.visitor_id, db.visitors);
+
             // if has a current visitor session
             if (index !== -1) {
               db.visitors[index].alerts.push({
@@ -44,15 +46,17 @@ const loginPost = (req, res) => {
               });
               // if they dont have a current visitor session
             } else {
-              req.session.visitor_id = id;
+              const visitId = genVisitorId(db.visitors);
+              req.session.visitor_id = visitId;
               db.visitors.push({
-                id,
+                id: visitId,
                 visited_urls: {},
                 alerts: [
                   { type: 'success', msg: 'Login successful! Welcome back.' }
                 ]
               });
             }
+            index = getVisitorIndex(req.session.visitor_id, db.visitors);
             updateDatabase(db);
             res.redirect('/urls');
 

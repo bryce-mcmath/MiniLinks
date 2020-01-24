@@ -17,13 +17,11 @@ const loginGet = (req, res) => {
     if (index !== -1) {
       alerts = db.visitors[index].alerts;
     }
-    console.log('alerts before rendering login: ', alerts);
     res.render('login', { user: undefined, alerts });
     // If already a visitor, reset alerts
     if (index !== -1) {
       db.visitors[index].alerts = [];
       updateDatabase(db);
-      console.log('alerts after rendering login: ', db.visitors[index].alerts);
     }
   }
 };
