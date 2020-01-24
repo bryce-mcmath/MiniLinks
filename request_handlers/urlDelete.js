@@ -1,16 +1,25 @@
-const fs = require('fs');
+// Helper functions
+const {
+  getDatabase,
+  updateDatabase,
+  userIsLoggedIn
+} = require('../helpers/helpers');
 
 const urlDelete = (req, res) => {
   try {
-    const db = JSON.parse(fs.readFileSync('./db.json'));
+    const db = getDatabase();
     const shortURL = req.params.shortURL;
-    if (req.session.user_id === db.urls[shortURL].userID) {
+    if (
+      userIsLoggedIn(req.session.user_id, db.users) &&
+      req.session.user_id === db.urls[shortURL].userID
+    ) {
+      //
       delete db.urls[shortURL];
-      fs.writeFileSync('./db.json', JSON.stringify(db, null, 2));
+      updateDatabase(db);
       res.redirect('/urls');
     } else {
       res.status(403);
-      res.redirect('/register');
+      res.redirect('/login');
     }
   } catch (error) {
     console.log('Error: ', error);

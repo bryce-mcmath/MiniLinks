@@ -1,2 +1,4 @@
 node_modules
 NOTES.md
+config.js
+db.json

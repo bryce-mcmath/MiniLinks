@@ -1,24 +1,24 @@
 const db = {
   users: {
-    user_id: {
-      id: 'skjadh',
-      name: 'sakjd',
-      email: 'asdkh',
-      hashedpw: 'kj'
+    '[alphanumeric string]': {
+      id: '[alphanumeric string]',
+      name: 'Adam Sambler',
+      email: 'adam@sandals.com',
+      hashedpw: '[hash]'
     }
   },
   urls: {
-    shortURL: {
-      longURL: '',
-      user_id: '',
-      visitors: [
-        {
-          id: 'sh34I9',
-          visits: [Date.now(), Date.now()]
-        }
-      ]
+    '[alphanumeric string]': {
+      longURL: '[alphanumeric string]',
+      user_id: '[alphanumeric string]',
+      created: '[Date string]'
     }
-  }
+  },
+  visitors: [
+    {
+      id: '[alphanumeric string]',
+      visited_urls: { '[alphanumeric string]': ['Date string', 'Date string'] },
+      alerts: [{ type: '[bootstrap prefix]', msg: '[string]' }]
+    }
+  ]
 };
-
-console.log(db);

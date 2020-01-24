@@ -1,12 +1,16 @@
 const bcrypt = require('bcrypt');
-const fs = require('fs');
 
 // Helper functions
-const { getUserByEmail } = require('../helpers');
+const {
+  getDatabase,
+  updateDatabase,
+  getUserByEmail
+} = require('../helpers/helpers');
 
+// ALERT NEEDED IN HERE
 const loginPost = (req, res) => {
   try {
-    const db = JSON.parse(fs.readFileSync('./db.json'));
+    const db = getDatabase();
 
     // Destructure info passed into post request
     const { email, password } = req.body;
@@ -18,6 +22,7 @@ const loginPost = (req, res) => {
     if (password && email && id) {
       // Get hashed pw from db
       const hash = db.users[id].password;
+
       // Verify correct pw
       bcrypt.compare(password, hash, (err, result) => {
         if (err) {
@@ -27,6 +32,13 @@ const loginPost = (req, res) => {
         } else {
           if (result) {
             req.session.user_id = id;
+            req.session.visitor_id = id;
+            db.visitors.push({
+              id,
+              visited_urls: {},
+              alerts: [{ type: 'success', msg: 'Login successful!' }]
+            });
+            updateDatabase(db);
             res.redirect('/urls');
           } else {
             console.log('Wrong password attempted');

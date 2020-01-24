@@ -1,17 +1,18 @@
-const fs = require('fs');
+// Helper functions
+const { userIsLoggedIn, getDatabase } = require('../helpers/helpers');
 
 const urlsNewGet = (req, res) => {
   try {
     // Fetch db file and parse into an object
-    if (req.session.user_id) {
-      const db = JSON.parse(fs.readFileSync('./db.json'));
-      const users = db.users;
+    const db = getDatabase();
+    if (userIsLoggedIn(req.session.user_id, db.users)) {
+      const user = db.users[req.session.user_id];
       const templateVars = {
-        user: users[req.session.user_id]
+        user
       };
       res.render('urls_new', templateVars);
     } else {
-      res.redirect('/register');
+      res.redirect('/login');
     }
   } catch (error) {
     console.log('Error: ', error);

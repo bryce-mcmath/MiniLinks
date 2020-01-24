@@ -18,6 +18,27 @@
   box-shadow: 0 0 0 0.1rem #140118 !important;
 }
 
+.btn-outline-primary,
+.btn-outline-primary:focus,
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.btn-outline-primary:visited {
+  border-color: #301934 !important;
+  color: #301934 !important;
+}
+
+.btn-outline-primary:focus,
+.btn-outline-primary:hover,
+.btn-outline-primary:active {
+  box-shadow: 0 0 0 0.1rem #140118 !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active {
+  background-color: #301934 !important;
+  color: white !important;
+}
+
 i {
   position: relative;
 }

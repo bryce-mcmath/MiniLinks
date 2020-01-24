@@ -1,17 +1,22 @@
 const bcrypt = require('bcrypt');
-const fs = require('fs');
-
-// To be used with bcrypt
-let saltRounds = 10;
+const { saltRounds } = require('../config');
 
 // Helper functions
-const { getUserByEmail, generateId } = require('../helpers');
+const {
+  getDatabase,
+  updateDatabase,
+  getUserByEmail,
+  genUserId
+} = require('../helpers/helpers');
 
+// ALERTS NEEDED IN HERE
 const registerPost = (req, res) => {
   try {
-    const db = JSON.parse(fs.readFileSync('./db.json'));
+    const db = getDatabase();
+
     // Destructure info passed into post request
     const { name, email, password, password2 } = req.body;
+
     // Check passwords match and email hasn't been taken
     if (
       password &&
@@ -20,21 +25,26 @@ const registerPost = (req, res) => {
       password === password2 &&
       !getUserByEmail(email, db.users)
     ) {
-      let id = generateId();
-      while (Object.keys(db.users).indexOf(id) !== -1) {
-        id = generateId();
-      }
+      const id = genUserId(db.users);
       bcrypt.hash(password, saltRounds, (err, hash) => {
         if (err) {
           console.log('Error creating hash: ', err);
         } else {
+          // Add user to db
           db.users[id] = {
             name,
             email: email.toLowerCase(),
             id,
             password: hash
           };
-          fs.writeFileSync('./db.json', JSON.stringify(db, null, 2));
+          // Add user to visitors and add alert
+          db.visitors.push({
+            id,
+            visited_urls: {},
+            alerts: [{ type: 'success', msg: 'Account successfully created!' }]
+          });
+          updateDatabase(db);
+          req.session.visitor_id = id;
           req.session.user_id = id;
           res.redirect('/urls');
         }

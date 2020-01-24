@@ -1,37 +1,48 @@
-const { generateId, getVisitorIndex } = require('../helpers');
-
-const fs = require('fs');
+// Helper functions
+const {
+  getDatabase,
+  updateDatabase,
+  generateId,
+  getVisitorIndex,
+  genVisitorId
+} = require('../helpers/helpers');
 
 const shortUrlGet = (req, res) => {
   try {
-    const db = JSON.parse(fs.readFileSync('./db.json'));
+    const db = getDatabase();
     const shortURL = req.params.shortURL;
     const longURL = db.urls[shortURL].longURL;
-    const index = getVisitorIndex(req.session.visitor_id, db.urls);
-    if (typeof index === 'number') {
-      console.log('Hit first route');
-      db.urls[shortURL].visitors[index].visits.push(Date.now());
-    } else {
-      let id = generateId();
-      let clear = false;
-      // check that generated id is not already taken
-      while (!clear) {
-        for (let url in db.urls) {
-          for (let visitor in url.visitors) {
-            if (visitor.id === id) {
-              // regen and check again
-              id = generateId();
-              continue;
-            }
-          }
-        }
-        clear = true;
-      }
-      req.session.visitor_id = id;
-      db.urls[shortURL].visitors.push({ id, visits: [Date.now()] });
-    }
 
-    fs.writeFileSync('./db.json', JSON.stringify(db, null, 2));
+    // create timestamp
+    const date = new Date(Date.now());
+    const timestamp = date.toString();
+
+    const visitorIndex = getVisitorIndex(req.session.visitor_id, db.visitors);
+
+    // If they already have a visitor id
+    if (visitorIndex !== -1) {
+      // if they have visited this url before
+      if (db.visitors[visitorIndex].visited_urls[shortURL]) {
+        // add timestamp to that url
+        db.visitors[visitorIndex].visited_urls[shortURL].push(timestamp);
+      } else {
+        // add a new shorturl to their
+        db.visitors[visitorIndex].visited_urls[shortURL] = [timestamp];
+      }
+    } else {
+      const visitorId = genVisitorId(db.visitors);
+
+      // Have a cookie!
+      req.session.visitor_id = visitorId;
+
+      // Add new visitor
+      db.visitors.push({
+        id: visitorId,
+        visited_urls: { [shortURL]: [timestamp] },
+        alerts: []
+      });
+    }
+    updateDatabase(db);
     res.redirect(longURL);
   } catch (error) {
     console.log('Error: ', error);
