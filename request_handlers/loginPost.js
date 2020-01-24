@@ -32,6 +32,13 @@ const loginPost = (req, res) => {
         } else {
           if (result) {
             req.session.user_id = id;
+            req.session.visitor_id = id;
+            db.visitors.push({
+              id,
+              visited_urls: {},
+              alerts: [{ type: 'success', msg: 'Login successful!' }]
+            });
+            updateDatabase(db);
             res.redirect('/urls');
           } else {
             console.log('Wrong password attempted');

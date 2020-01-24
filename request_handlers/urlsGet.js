@@ -4,7 +4,8 @@ const {
   urlsForUser,
   userIsLoggedIn,
   getVisitorIndex,
-  updateDatabase
+  updateDatabase,
+  getAlerts
 } = require('../helpers/helpers');
 
 const urlsGet = (req, res) => {
@@ -18,18 +19,25 @@ const urlsGet = (req, res) => {
       const urls = urlsForUser(req.session.user_id, db.urls);
       // Fetch alerts
       const visitorIndex = getVisitorIndex(req.session.visitor_id, db.visitors);
-      const alerts = db.visitors[visitorIndex].alerts;
+      let alerts = [];
+      if (db.visitors[visitorIndex]) {
+        alerts = getAlerts(visitorIndex, db.visitors);
+      }
 
       const templateVars = {
         user,
         urls,
         alerts
       };
+
       res.render('urls_index', templateVars);
-      // Reset alerts after render
-      db.visitors[visitorIndex].alerts = [];
-      // Update db
-      updateDatabase(db);
+      if (alerts.length >= 1) {
+        // Reset alerts after render
+        db.visitors[visitorIndex].alerts = [];
+
+        // Update db
+        updateDatabase(db);
+      }
     } else {
       res.status(403);
       res.redirect('/login');

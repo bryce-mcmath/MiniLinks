@@ -1,12 +1,12 @@
 const bcrypt = require('bcrypt');
-const { saltRounds } = require('./config');
+const { saltRounds } = require('../config');
 
 // Helper functions
 const {
   getDatabase,
   updateDatabase,
   getUserByEmail,
-  generateId
+  genUserId
 } = require('../helpers/helpers');
 
 // ALERTS NEEDED IN HERE
@@ -25,18 +25,26 @@ const registerPost = (req, res) => {
       password === password2 &&
       !getUserByEmail(email, db.users)
     ) {
-      // PUT HELPER HERE
+      const id = genUserId(db.users);
       bcrypt.hash(password, saltRounds, (err, hash) => {
         if (err) {
           console.log('Error creating hash: ', err);
         } else {
+          // Add user to db
           db.users[id] = {
             name,
             email: email.toLowerCase(),
             id,
             password: hash
           };
+          // Add user to visitors and add alert
+          db.visitors.push({
+            id,
+            visited_urls: {},
+            alerts: [{ type: 'success', msg: 'Account successfully created!' }]
+          });
           updateDatabase(db);
+          req.session.visitor_id = id;
           req.session.user_id = id;
           res.redirect('/urls');
         }

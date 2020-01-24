@@ -2,7 +2,11 @@
 const {
   getDatabase,
   updateDatabase,
-  userIsLoggedIn
+  userIsLoggedIn,
+  getVisitorIndex,
+  getAlerts,
+  getVisits,
+  getUniqVisits
 } = require('../helpers/helpers');
 
 const urlGet = (req, res) => {
@@ -20,17 +24,21 @@ const urlGet = (req, res) => {
       const user = db.users[req.session.user_id];
       // Fetch alerts
       const visitorIndex = getVisitorIndex(req.session.visitor_id, db.visitors);
-      const alerts = db.visitors[visitorIndex].alerts;
+      const alerts = getAlerts(visitorIndex, db.visitors);
+      const visits = getVisits(shortURL, db.visitors);
+      const uniques = getUniqVisits(shortURL, db.visitors);
 
       const templateVars = {
         user,
         url,
         shortURL,
+        visits,
+        uniques,
         alerts
       };
       res.render(`urls_show`, templateVars);
       // Reset alerts after rendering
-      db.visitors[visitors].alerts = [];
+      db.visitors[visitorIndex].alerts = [];
       updateDatabase(db);
     } else {
       res.status(403);

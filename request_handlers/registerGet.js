@@ -2,7 +2,8 @@
 const {
   getDatabase,
   updateDatabase,
-  userIsLoggedIn
+  userIsLoggedIn,
+  getVisitorIndex
 } = require('../helpers/helpers');
 
 const registerGet = (req, res) => {
@@ -10,11 +11,15 @@ const registerGet = (req, res) => {
   if (userIsLoggedIn(req.session.user_id, db.users)) {
     res.redirect('/urls');
   } else {
-    res.render('../views/register', { user: undefined, alerts: [] });
+    const visitorIndex = getVisitorIndex(req.session.visitor_id, db.visitors);
+    let alerts = [];
+    if (visitorIndex !== -1) {
+      alerts = db.visitors[visitorIndex].alerts;
+    }
+    res.render('../views/register', { user: undefined, alerts });
     // If already a visitor, reset alerts
-    const visitorId = getVisitorId(req.session.visitor_id, db.visitors);
-    if (visitorId !== -1) {
-      db.visitors[visitorId].alerts = [];
+    if (visitorIndex !== -1) {
+      db.visitors[visitorIndex].alerts = [];
     }
     updateDatabase(db);
   }

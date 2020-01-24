@@ -8,3 +8,5 @@ const genShortUrl = urls => {
   }
   return shortURL;
 };
+
+module.exports = genShortUrl;

@@ -12,8 +12,20 @@
             TinyURL for: <a href="<%= url.longURL %>"><%= url.longURL %></a>
           </h5>
           <p class="card-text">
-            Short URL: <a href="/u/<%= shortURL %>"><%= "/u/" + shortURL %></a>
+            Short URL:
+            <a href="/u/<%= shortURL %>"><%= "/u/" + shortURL %></a> created <%=
+            url.created.split(' ').slice(0, 5).join(' ') %>
           </p>
+          <div class="tags">
+            <button class="btn btn-primary">
+              Total Visits
+              <span class="badge badge-light"><%= visits.length %></span>
+            </button>
+            <button class="btn btn-primary">
+              Unique Visits
+              <span class="badge badge-light"><%= uniques %></span>
+            </button>
+          </div>
         </div>
         <div class="card-footer text-muted">
           <h3>Edit</h3>
@@ -47,6 +59,12 @@
             Table below is scrollable
             <i class="fa fa-long-arrow-right arrow" aria-hidden="true"></i>
           </p> -->
+          <!-- user,
+        url,
+        shortURL,
+        visits,
+        uniques,
+        alerts -->
           <thead class="table-head-dark">
             <tr>
               <th scope="col">Visitor ID:</th>
@@ -54,14 +72,12 @@
             </tr>
           </thead>
           <tbody>
-            <% for (let i = 0; i < url.visitors.length && i < 20; i++) { for
-            (let visit of url.visitors[i].visits) { %>
+            <% for (let i = 0; i < visits.length && i < 20; i++) { %>
             <tr>
-              <td><%= url.visitors[i].id %></td>
-              <% let date = new Date(visit); %>
-              <td><%= date.toString() %></td>
+              <td><%= visits[i].id %></td>
+              <td><%= visits[i].timestamp %></td>
             </tr>
-            <% } } %>
+            <% } %>
           </tbody>
         </table>
       </div>
