@@ -85,14 +85,14 @@ npm run test
 
 ## Known issues / bugs
 
-- Severly lacking in alert functionality; the structure is there, as some alerts have been implemented (eg. successful registration) but due to time constraints, many crucial alerts are not present (eg. this email is already in use, non-matching passwords)
+- Severly lacking in alert functionality; the structure is there, the alert 'state' is working, but due to time constraints, many crucial alerts are not present (eg. this email is already in use, non-matching passwords, URL deleted etc.)
 - The UI is destitute
 - There is some client side validation, but you can still send app-breaking data to the server if you put some effort into it
 - Very little testing coverage, I did the minimum required in favour of adding more features
 
 ## Feature roadmap
 
-- Complete alert coverage, so the user always knows what's happening or what went wrong
+- Complete alert functionality, so the user always knows what's happening or what went wrong
 - Complete test coverage
 - Add JSDoc comments
 - Make it nice to look at
