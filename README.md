@@ -6,11 +6,13 @@ MiniLinks is a very cruddy app. Users can register, login, logout, create shorte
 
 This app was made in three days on top of other coursework, and the UI reflects that.
 
+**NOTE FOR EVALUATOR:** The gif below is old and doesn't showcase newer features, notably the alerts. I will update the gif at a later date, just please don't base your assessment off the gif.
+
 ## Usage
 
-![MiniLinks](https://raw.githubusercontent.com/bryce-mcmath/tinyapp/master/screenshots/demo.gif)
+![MiniLinks](https://raw.githubusercontent.com/bryce-mcmath/tinyapp/master/docs/demo.gif)
 
-The above gif demonstrates basic usage
+The above gif demonstrates basic usage. For further screencaps, please navigate to the [docs folder](https://github.com/bryce-mcmath/tinyapp/tree/master/docs)
 
 ## Table of contents
 
@@ -85,14 +87,12 @@ npm run test
 
 ## Known issues / bugs
 
-- Severly lacking in alert functionality; the structure is there, the alert 'state' is working, but due to time constraints, many crucial alerts are not present (eg. this email is already in use, non-matching passwords, URL deleted etc.)
 - The UI is destitute
 - There is some client side validation, but you can still send app-breaking data to the server if you put some effort into it
 - Very little testing coverage, I did the minimum required in favour of adding more features
 
 ## Feature roadmap
 
-- Complete alert functionality, so the user always knows what's happening or what went wrong
 - Complete test coverage
 - Add JSDoc comments
 - Make it nice to look at
@@ -101,7 +101,3 @@ npm run test
 - Open to suggestions, email below
 
 Email: [bryce.j.mcmath@gmail.com](mailto:bryce.j.mcmath@gmail.com)
-
-<!-- Markdown link & img definitions -->
-
-[demo]: https://raw.githubusercontent.com/bryce-mcmath/tinyapp/master/screenshots/demo.gif
