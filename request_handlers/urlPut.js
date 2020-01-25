@@ -1,5 +1,11 @@
 // Helper functions
-const { getDatabase, updateDatabase } = require('../helpers/helpers');
+const {
+  getDatabase,
+  updateDatabase,
+  userIsLoggedIn,
+  getVisitorIndex,
+  genVisitorId
+} = require('../helpers/helpers');
 
 const urlPut = (req, res) => {
   try {
@@ -9,8 +15,8 @@ const urlPut = (req, res) => {
     if (userIsLoggedIn(req.session.user_id, db.users)) {
       // They are the owner
       if (req.session.user_id === db.urls[shortURL].userID) {
-        // delete
-        delete db.urls[shortURL];
+        const longURL = req.body.longURL;
+        db.urls[shortURL].longURL = longURL;
         // alert shorturl deleted
         const index = getVisitorIndex(req.session.visitor_id, db.visitors);
         // If they have a current visitor session already

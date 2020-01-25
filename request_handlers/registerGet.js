@@ -16,7 +16,6 @@ const registerGet = (req, res) => {
     if (visitorIndex !== -1) {
       alerts = db.visitors[visitorIndex].alerts;
     }
-    console.log('alerts before rendering register: ', alerts);
     res.render('../views/register', { user: undefined, alerts });
     // If already a visitor, reset alerts
     if (visitorIndex !== -1) {

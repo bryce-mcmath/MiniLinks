@@ -23,7 +23,6 @@ const urlsGet = (req, res) => {
       if (index !== -1) {
         alerts = getAlerts(index, db.visitors);
       }
-      console.log('Alerts in GET/urls before templateVars sent: ', alerts);
       const templateVars = {
         user,
         urls,
@@ -38,10 +37,6 @@ const urlsGet = (req, res) => {
         // Update db
         updateDatabase(db);
       }
-      console.log(
-        'Alerts in GET/urls after templateVars sent: ',
-        db.visitors[index].alerts
-      );
     } else {
       res.status(403);
       res.redirect('/login');
