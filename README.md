@@ -75,17 +75,17 @@ npm run test
 
 - [Nodejs](https://nodejs.org/en/) - Javascript runtime
 - [Express](https://expressjs.com/) - Framework used for API in Node
-- [body-parser]() - Easily extract data from request bodies
-- [bcrypt]() - Password hashing
-- [cookie-session]() - Encrypted cookies to create safer sessions
-- [ejs]() - Templating Engine
-- [method-overide]() - Allowing more HTTP methods than POST and GET
+- [body-parser](https://www.npmjs.com/package/body-parser) - Easily extract data from request bodies
+- [bcrypt](https://www.npmjs.com/package/bcrypt) - Password hashing
+- [cookie-session](https://www.npmjs.com/package/cookie-session) - Encrypted cookies to create safer sessions
+- [ejs](https://www.ejs.co) - Templating Engine
+- [method-overide](https://www.npmjs.com/package/method-override) - Allowing more HTTP methods than POST and GET
 
 ## Dev Dependencies
 
-- [Chai]() - Assertion library
-- [Mocha]() - Testing framework
-- [nodemon]() - Auto reload server for quicker debugging
+- [Chai](https://www.chaijs.com) - Assertion library
+- [Mocha](https://www.mochajs.org) - Testing framework
+- [nodemon](https://www.nodemon.io) - Auto reload server for quicker debugging
 
 ## Meta
 
