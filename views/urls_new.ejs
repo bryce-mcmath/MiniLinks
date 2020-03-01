@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include ("partials/_head") %>
-  <body>
-    <%- include ("partials/_header") %>
-    <div class="main container">
-      <div class="card text-center">
-        <div class="card-header"></div>
-        <div class="card-body">
-          <h3>Create MiniURL</h3>
-          <p class="hide-tablet">
-            Input your desired URL below to create a shortened URL that links to
-            it.
-          </p>
-        </div>
-        <div class="card-footer text-muted">
-          <hr />
-          <form class="form" action="/urls" method="POST">
-            <div class="form-group my-2">
-              <label for="longURL" class="m-2">Enter a URL:</label>
-              <input
-                class="form-control"
-                type="url"
-                name="longURL"
-                value="https://"
-                required
-                pattern="https?://.+"
-              />
-              <button type="submit" class="btn btn-primary float-right my-3">
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <!-- Old below, new above -->
-    </div>
-    <%- include ("partials/_footer") %>
-  </body>
+	<%- include ("partials/_head") %>
+	<body>
+		<%- include ("partials/_header") %>
+		<div class="main container">
+			<div class="card text-center">
+				<div class="card-header"></div>
+				<div class="card-body">
+					<h3>Create MiniURL</h3>
+					<p class="hide-tablet">
+						Input your desired URL below to create a shortened URL that links to
+						it.
+					</p>
+				</div>
+				<div class="card-footer text-muted">
+					<hr />
+					<form class="form" action="/urls" method="POST">
+						<div class="form-group my-2">
+							<label for="longURL" class="m-2">Enter a URL:</label>
+							<input
+								class="form-control"
+								type="url"
+								name="longURL"
+								value="https://"
+								required
+								pattern="https?://.+"
+							/>
+							<button type="submit" class="btn btn-primary float-right my-3">
+								Submit
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<%- include ("partials/_footer") %>
+	</body>
 </html>

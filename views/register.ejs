@@ -3,12 +3,6 @@
   <%- include ("partials/_head") %>
   <body>
     <%- include ("partials/_header") %>
-<<<<<<< HEAD
-=======
-    <!-- TODO: Add onsubmit function to check for password -->
-    <!-- match that stops submission and displays an error -->
-    <!-- message briefly. -->
->>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
     <div class="main d-flex card bg-light">
       <% if (alerts.length > 0) { %>
         <% for (let i = 0; i < alerts.length; i++) { %>
@@ -17,13 +11,8 @@
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-<<<<<<< HEAD
         </div>
         <% } %>
-=======
-        </div> 
-        <% } %> 
->>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
       <% } %>
       <article class="card-body mx-auto" style="max-width: 400px;">
         <h4 class="card-title mt-3 text-center">Create Account</h4>
@@ -34,11 +23,7 @@
               <span class="input-group-text"> <i class="fa fa-user"></i> </span>
            </div>
               <input name="name" class="form-control" placeholder="Full name" type="text" required>
-<<<<<<< HEAD
           </div>
-=======
-          </div> 
->>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
           <div class="form-group input-group">
             <div class="input-group-prepend">
               <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
@@ -56,7 +41,6 @@
               <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
           </div>
               <input name="password2" class="form-control" placeholder="Repeat password" type="password" required minlength="6">
-<<<<<<< HEAD
           </div>
           <div class="form-group">
               <button type="submit" class="btn btn-outline-success btn-block"> Create Account  </button>
@@ -67,18 +51,6 @@
       </div>
 
       </div>
-=======
-          </div>                                    
-          <div class="form-group">
-              <button type="submit" class="btn btn-outline-success btn-block"> Create Account  </button>
-          </div>    
-          <p class="text-center">Already have an account? <a href="/login">Log In</a> </p>                                                                 
-      </form>
-      </article>
-      </div> <!-- card.// -->
-      
-      </div> 
->>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
       <%- include ("partials/_footer") %>
   </body>
 </html>
