@@ -1,0 +1,106 @@
+.navbar {
+  height: 5rem !important;
+}
+
+.nav-item {
+  color: #fff;
+}
+
+.main {
+  min-height: calc(100vh - 10rem) !important;
+}
+
+.alert {
+  margin: auto;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  min-width: 60%;
+  align-self: center;
+  max-width: 90%;
+}
+
+.nav-bg,
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #301934 !important;
+  border-color: #140118 !important;
+}
+
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:active {
+  box-shadow: 0 0 0 0.1rem #140118 !important;
+}
+
+.btn-outline-primary,
+.btn-outline-primary:focus,
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.btn-outline-primary:visited {
+  border-color: #301934 !important;
+  color: #301934 !important;
+}
+
+.btn-outline-primary:focus,
+.btn-outline-primary:hover,
+.btn-outline-primary:active {
+  box-shadow: 0 0 0 0.1rem #140118 !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active {
+  background-color: #301934 !important;
+  color: white !important;
+}
+
+i {
+  position: relative;
+}
+
+.arrow {
+  animation: slide1 1s ease-in-out infinite;
+}
+
+.bouncer {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.container {
+  min-height: 20rem;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  height: 5rem;
+}
+
+.footer nav {
+  height: 100%;
+}
+
+@keyframes slide1 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(10px, 0);
+  }
+}
+
+@media screen and (min-width: 442px) {
+  .hide-tablet {
+    display: none;
+  }
+}
