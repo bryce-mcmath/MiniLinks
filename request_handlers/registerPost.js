@@ -1,4 +1,4 @@
-const bcrypt = require('../node_modules/bcrypt/bcrypt');
+const bcrypt = require('bcrypt');
 const { saltRounds } = require('../config');
 
 // Helper functions

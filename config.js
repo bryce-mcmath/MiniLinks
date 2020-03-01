@@ -1,4 +1,4 @@
 module.exports = {
-  saltRounds: 10,
-  secret: 'ckent'
+	saltRounds: 10,
+	secret: 'ckent'
 };

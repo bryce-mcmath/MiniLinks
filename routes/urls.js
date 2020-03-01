@@ -1,14 +1,14 @@
-const express = require('../node_modules/express');
+const express = require('express');
 const router = express.Router();
 
 // Request handlers
 const {
-	urlsGet,
-	urlsPost,
-	urlsNewGet,
-	urlGet,
-	urlPut,
-	urlDelete
+  urlsGet,
+  urlsPost,
+  urlsNewGet,
+  urlGet,
+  urlPut,
+  urlDelete
 } = require('../request_handlers/handlers');
 
 /**

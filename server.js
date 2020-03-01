@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 const express = require('./node_modules/express');
 const bodyParser = require('./node_modules/body-parser');
 const cookieSession = require('cookie-session');
 const methodOverride = require('./node_modules/method-override');
+=======
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
+const methodOverride = require('method-override');
+>>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
 const app = express();
 const PORT = 5050;
 
@@ -27,11 +34,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 const { secret } = require('./config');
 app.use(
+<<<<<<< HEAD
 	cookieSession({
 		name: 'session',
 		secret,
 		maxAge: 24 * 60 * 60 * 1000 // 24 hours
 	})
+=======
+  cookieSession({
+    name: 'session',
+    secret,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  })
+>>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
 );
 
 /* Routes */
@@ -67,5 +82,9 @@ app.use('/u', u);
 app.get('/*', catchGet);
 
 app.listen(PORT, () => {
+<<<<<<< HEAD
 	console.log(`Server listening on port ${PORT}!`);
+=======
+  console.log(`Server listening on port ${PORT}!`);
+>>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
 });

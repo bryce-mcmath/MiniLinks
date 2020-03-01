@@ -2,14 +2,22 @@
 
 > A URL shortener, à la Bitly, TinyURL, or Rebrandly.
 
+<<<<<<< HEAD
 <!-- Badges  -->
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
+=======
+>>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
 MiniLinks is a very cruddy app. Users can register, login, logout, create shortened URLs, edit them, delete them, view how many times they've been visited (both uniquely and overall) and the timestamps of when they were visited as well as the date they were created.
 
 This app was made in three days on top of other coursework, and the UI reflects that.
 
+<<<<<<< HEAD
+=======
+**NOTE FOR EVALUATOR:** The gif below is old and doesn't showcase newer features, notably the alerts. I will update the gif at a later date, just please don't base your assessment off the gif.
+
+>>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
 ## Usage
 
 ![MiniLinks](https://raw.githubusercontent.com/bryce-mcmath/tinyapp/master/docs/demo.gif)
@@ -45,7 +53,11 @@ One extra step for Windows users. After this, do what everyone else does. In the
 npm i -g node-gyp node-pre-gyp windows-build-tools chokidar
 ```
 
+<<<<<<< HEAD
 You can thank bcrypt for this, we were not supposed to use bcryptjs for some good reason I am unaware of
+=======
+You can thank bcrypt for this!
+>>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
 
 #### Everyone Else
 
@@ -87,10 +99,13 @@ npm run test
 - [Mocha]() - Testing framework
 - [nodemon]() - Auto reload server for quicker debugging
 
+<<<<<<< HEAD
 ## Meta
 
 Bryce McMath – [bryce-mcmath](https://github.com/bryce-mcmath) – [bryce.j.mcmath@gmail.com](mailto:bryce.j.mcmath@gmail.com)
 
+=======
+>>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778
 ## Known issues / bugs
 
 - The UI is destitute
@@ -99,6 +114,7 @@ Bryce McMath – [bryce-mcmath](https://github.com/bryce-mcmath) – [bryce.j.mc
 
 ## Feature roadmap
 
+<<<<<<< HEAD
 If I had more time, I would...
 
 - Add way more test coverage
@@ -106,3 +122,13 @@ If I had more time, I would...
 - Make it nice to look at
 - Host it
 - Attach it to a real database rather than a JSON file
+=======
+- Complete test coverage
+- Add JSDoc comments
+- Make it nice to look at
+- Host it on Heroku
+- Attach it to a real database rather than a JSON file
+- Open to suggestions, email below
+
+Email: [bryce.j.mcmath@gmail.com](mailto:bryce.j.mcmath@gmail.com)
+>>>>>>> ab5808035d6a5f8c523428f79b50e6524ba71778

@@ -1,12 +1,12 @@
-const bcrypt = require('../node_modules/bcrypt/bcrypt');
+const bcrypt = require('bcrypt');
 
 // Helper functions
 const {
-	getDatabase,
-	updateDatabase,
-	getUserByEmail,
-	genVisitorId,
-	getVisitorIndex
+  getDatabase,
+  updateDatabase,
+  getUserByEmail,
+  genVisitorId,
+  getVisitorIndex
 } = require('../helpers/helpers');
 
 // ALERT NEEDED IN HERE
